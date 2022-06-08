@@ -28,8 +28,6 @@ public class Vehicle {
     @Column(length = 5, nullable = false)
     private String yearOfConstruction;
 
-    @OneToOne
-    private Technician technician;
 
     @Override
     public String toString() {
@@ -38,7 +36,6 @@ public class Vehicle {
                 ", plateNumber='" + plateNumber + '\'' +
                 ", brand='" + brand + '\'' +
                 ", yearOfConstruction='" + yearOfConstruction + '\'' +
-                ", technician=" + technician +
                 '}';
     }
 }
