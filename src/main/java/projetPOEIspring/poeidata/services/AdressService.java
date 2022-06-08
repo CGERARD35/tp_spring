@@ -12,5 +12,4 @@ public interface AdressService {
     Adress update(Adress adress);
     void delete(Integer id);
 
-
 }

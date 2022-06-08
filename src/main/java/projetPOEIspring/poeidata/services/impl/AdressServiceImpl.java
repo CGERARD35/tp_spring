@@ -2,6 +2,7 @@ package projetPOEIspring.poeidata.services.impl;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import projetPOEIspring.poeidata.exceptions.UnknownResourceException;
 import projetPOEIspring.poeidata.models.Adress;
 import projetPOEIspring.poeidata.repositories.AdressRepository;
 import projetPOEIspring.poeidata.services.AdressService;
@@ -25,21 +26,28 @@ public class AdressServiceImpl implements AdressService {
     @Override
     public Adress getById(Integer id) {
         return this.adressRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException());
+                .orElseThrow(UnknownResourceException::new);
     }
 
     @Override
     public Adress create(Adress adress) {
-        return null;
+        adress.setId(null);
+        return this.adressRepository.save(adress);
     }
 
     @Override
     public Adress update(Adress adress) {
-        return null;
+        Adress adressToUpdate = this.getById(adress.getId());
+        adressToUpdate.setId(adress.getId());
+        adressToUpdate.setCity(adress.getCity());
+        adressToUpdate.setStreet(adress.getStreet());
+        adressToUpdate.setNumber(adress.getNumber());
+        return adressToUpdate;
     }
 
     @Override
     public void delete(Integer id) {
-
+        Adress adressToUpdate = this.getById(id);
+        this.adressRepository.delete(adressToUpdate);
     }
 }
