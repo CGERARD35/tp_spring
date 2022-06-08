@@ -1,4 +1,4 @@
 package projetPOEIspring.poeidata.models;
 
-public class Adresse {
+public class Worksite {
 }
