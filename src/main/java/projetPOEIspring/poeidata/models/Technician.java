@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "Technician")
@@ -32,12 +33,17 @@ public class Technician {
     @JoinColumn(name = "manager_id", nullable = false)
     private Manager manager;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "adress_id", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "adress_id")
     private Adress adress;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "worksite_id", nullable = false)
-    private Worksite worksite;
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(joinColumns={@JoinColumn(name="technician_id")},
+            inverseJoinColumns = {@JoinColumn(name="worksite_id")})
+    private Set<Worksite> worksites;
+
+    @OneToOne
+    @JoinColumn(name = "vehicle_id")
+    private Vehicle vehicle;
 
 }
