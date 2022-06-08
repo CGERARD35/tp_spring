@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "worksite")
@@ -27,5 +28,9 @@ public class Worksite {
     @OneToOne
     @JoinColumn(name = "adress_id")
     private Adress adress;
+
+    @ManyToMany(mappedBy = "worksites")
+    List<Technician> technicians;
+
 
 }
