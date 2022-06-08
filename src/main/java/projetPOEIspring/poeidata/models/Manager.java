@@ -34,6 +34,6 @@ public class Manager {
     private String mobilePhone;
 
     @OneToMany (mappedBy = "manager")
-    private Set<Technician> technician;
+    private Set<Technician> technicians;
 
 }
