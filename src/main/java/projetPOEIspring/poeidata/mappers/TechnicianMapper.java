@@ -1,4 +1,4 @@
 package projetPOEIspring.poeidata.mappers;
 
-public interface TechnicienMapper {
+public interface TechnicianMapper {
 }

@@ -1,4 +1,4 @@
 package projetPOEIspring.poeidata.services.impl;
 
-public class TechnicienServiceImpl {
+public class TechnicianServiceImpl {
 }

@@ -1,4 +1,4 @@
 package projetPOEIspring.poeidata.repositories;
 
-public interface TechnicienRepository {
+public interface TechnicianRepository {
 }
