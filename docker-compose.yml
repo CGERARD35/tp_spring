@@ -4,8 +4,8 @@ services:
   projet-db:
     image: postgres:latest
     environment:
-      - POSTGRES_USER=projet
-      - POSTGRES_PASSWORD=projet
-      - POSTGRES_DB=projet
+      - POSTGRES_USER=tpspring
+      - POSTGRES_PASSWORD=tpspring
+      - POSTGRES_DB=tpspring
     ports:
-      - "5579:5432"
+      - "5574:5432"

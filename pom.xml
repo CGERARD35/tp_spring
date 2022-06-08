@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>crm</artifactId>
+	<artifactId>tp</artifactId>
 	<version>0.0.1-DEV</version>
-	<name>Application CRM</name>
-	<description>Construction d'un CRM pour le cours de Spring</description>
+	<name>TP spring</name>
+	<description>TP Spring</description>
 
 	<properties>
 		<java.version>17</java.version>
