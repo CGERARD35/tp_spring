@@ -4,6 +4,7 @@ package projetPOEIspring.poeidata.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import projetPOEIspring.poeidata.exceptions.CantCreateException;
 import projetPOEIspring.poeidata.exceptions.UnknownResourceException;
 import projetPOEIspring.poeidata.repositories.VehicleRepository;
 import projetPOEIspring.poeidata.models.Vehicle;
@@ -31,8 +32,13 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public Vehicle createVehicle(Vehicle vehicle) {
-
-        return this.vehicleRepository.save(vehicle);
+        if (vehicle.getYearOfConstruction().length() > 5) {
+            throw new CantCreateException("Year of construction cannot exceed 5 characters");
+        } else if (vehicle.getPlateNumber().length() > 30) {
+            throw new CantCreateException("Plate number cannot exceed 5 characters");
+        } else {
+            return this.vehicleRepository.save(vehicle);
+        }
     }
 
     @Override
