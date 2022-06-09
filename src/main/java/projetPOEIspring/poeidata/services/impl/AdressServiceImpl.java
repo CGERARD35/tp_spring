@@ -2,6 +2,7 @@ package projetPOEIspring.poeidata.services.impl;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import projetPOEIspring.poeidata.exceptions.CantCreateException;
 import projetPOEIspring.poeidata.exceptions.UnknownResourceException;
 import projetPOEIspring.poeidata.models.Adress;
 import projetPOEIspring.poeidata.repositories.AdressRepository;
@@ -31,8 +32,13 @@ public class AdressServiceImpl implements AdressService {
 
     @Override
     public Adress create(Adress adress) {
-        adress.setId(null);
-        return this.adressRepository.save(adress);
+        if (adress.getCity().length() <= 5) {
+            adress.setId(null);
+            return this.adressRepository.save(adress);
+        } else {
+            throw new CantCreateException("City name cannot exceed 100 characters.");
+        }
+
     }
 
     @Override
