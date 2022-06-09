@@ -17,7 +17,7 @@ import java.util.List;
 @Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface ManagerMapper {
 
-    @Mapping(target = "technicians", expression = "java(getTechnicians(manager))")
+//    @Mapping(target = "technicians", expression = "java(getTechnician(manager))")
     ManagerDto mapManagerToManagerDto(Manager manager);
 
     default List<TechnicianDto> getTechnicians(Manager manager) {
@@ -31,7 +31,8 @@ public interface ManagerMapper {
                             technician.getAge(),
                             null,
                             manager.getId(),
-                            null
+                            null,
+                            technician.getWorksites().stream().map(Worksite::getId).toList()
                     ))
                     .toList();
         }
@@ -39,5 +40,6 @@ public interface ManagerMapper {
     }
 
     Manager mapManagerDtoToManager (ManagerDto managerDto);
+
 
 }

@@ -2,22 +2,28 @@ package projetPOEIspring.poeidata.services.impl;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import projetPOEIspring.poeidata.api.dto.TechnicianDto;
 import projetPOEIspring.poeidata.exceptions.UnknownResourceException;
+import projetPOEIspring.poeidata.models.Technician;
 import projetPOEIspring.poeidata.models.Worksite;
+import projetPOEIspring.poeidata.repositories.TechnicianRepository;
 import projetPOEIspring.poeidata.repositories.WorksiteRepository;
 import projetPOEIspring.poeidata.services.TechnicianService;
 import projetPOEIspring.poeidata.services.WorksiteService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class WorksiteServiceImpl implements WorksiteService {
 
     private final WorksiteRepository worksiteRepository;
+    private final TechnicianRepository technicianRepository;
     private final TechnicianService technicianService;
 
-    public WorksiteServiceImpl(WorksiteRepository worksiteRepository, TechnicianService technicianService) {
+    public WorksiteServiceImpl(WorksiteRepository worksiteRepository, TechnicianRepository technicianRepository, TechnicianService technicianService) {
         this.worksiteRepository = worksiteRepository;
+        this.technicianRepository = technicianRepository;
         this.technicianService = technicianService;
     }
 
@@ -35,8 +41,16 @@ public class WorksiteServiceImpl implements WorksiteService {
     @Override
     public Worksite create(Worksite worksite) {
         worksite.setId(null);
-        //TODO ajouter liste de customer
-        return this.worksiteRepository.save(worksite);
+        final Worksite createdWorkSite = this.worksiteRepository.save(worksite);
+        new ArrayList<>(createdWorkSite.getTechnicians()).forEach(
+                technician -> this.technicianRepository.findById(technician.getId()).ifPresent(
+                        tech -> {
+                            tech.getWorksites().add(createdWorkSite);
+                            this.technicianRepository.saveAndFlush(tech);
+                        }
+                )
+        );
+        return this.worksiteRepository.save(createdWorkSite);
     }
 
     @Override
