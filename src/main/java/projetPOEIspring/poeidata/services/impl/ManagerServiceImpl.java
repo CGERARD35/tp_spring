@@ -41,9 +41,19 @@ public class ManagerServiceImpl implements ManagerService {
     public Manager createManager(Manager manager) {
         manager.setId(null);
         log.debug("Attempting to save in DB...");
-        if(manager.getPhone().length() > 15 || manager.getPhone().length() < 2){
+        if(
+                manager.getPhone().length() > 15 ||
+                manager.getPhone().length() < 2 ||
+                manager.getMobilePhone().length() > 15 ||
+                manager.getMobilePhone().length() <2
+        ){
             throw new PhoneException("Le numéro doit etre contenue 2 et 15 charactères ");
-        } else if(manager.getFirstname().length() > 20 || manager.getFirstname().length() < 2){
+        } else if(
+                manager.getFirstname().length() > 20 ||
+                manager.getFirstname().length() < 2 ||
+                manager.getLastname().length() > 20 ||
+                manager.getLastname().length() < 2
+        ){
             throw new NameException("Le prénom doit etre contenue 2 et 20 charactères ");
         } else {
             return this.managerRepository.save(manager);
@@ -71,7 +81,22 @@ public class ManagerServiceImpl implements ManagerService {
         existingManager.setFirstname(manager.getFirstname());
         existingManager.setPhone(manager.getPhone());
         existingManager.setMobilePhone(manager.getMobilePhone());
-
+        if(
+                existingManager.getPhone().length() > 15 ||
+                existingManager.getPhone().length() < 2 ||
+                existingManager.getMobilePhone().length() > 15 ||
+                existingManager.getMobilePhone().length() <2
+        ){
+            throw new PhoneException("Le numéro doit etre contenue 2 et 15 charactères ");
+        } else if(
+                existingManager.getFirstname().length() > 20 ||
+                existingManager.getFirstname().length() < 2 ||
+                existingManager.getLastname().length() > 20 ||
+                existingManager.getLastname().length() < 2
+        ){
+            throw new NameException("Le prénom doit etre contenue 2 et 20 charactères ");
+        } else {
         return this.managerRepository.save(existingManager);
+        }
     }
 }
