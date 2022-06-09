@@ -8,11 +8,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import projetPOEIspring.poeidata.exceptions.UnknownResourceException;
-import projetPOEIspring.poeidata.models.Manager;
-import projetPOEIspring.poeidata.models.Technician;
+import projetPOEIspring.poeidata.models.*;
 import projetPOEIspring.poeidata.repositories.TechnicianRepository;
-import projetPOEIspring.poeidata.services.ManagerService;
-import projetPOEIspring.poeidata.services.TechnicianService;
+import projetPOEIspring.poeidata.services.*;
 
 import java.util.List;
 
@@ -26,6 +24,12 @@ public class TechnicianServiceImpl implements TechnicianService {
     private TechnicianRepository technicianRepository;
 
     private ManagerService managerService;
+
+    private WorksiteService worksiteService;
+
+    private VehicleService vehicleService;
+
+    private AdressService adressService;
 
     @Override
     public List<Technician> getAll() {
@@ -61,7 +65,12 @@ public class TechnicianServiceImpl implements TechnicianService {
         existingTechnician.setAge(technician.getAge());
         Manager manager = this.managerService.getById(technician.getManager().getId());
         existingTechnician.setManager(manager);
-        //TODO: worksite+Vehicle
+//        Worksite worksite = this.worksiteService.getBydId(technician.getWorksites().getId());
+//        existingTechnician.setWorksites(worksite);
+        Vehicle vehicle = this.vehicleService.getById(technician.getVehicle().getId());
+        existingTechnician.setVehicle(vehicle);
+        Adress adress = this.adressService.getById(technician.getAdress().getId());
+        existingTechnician.setVehicle(vehicle);
         return this.technicianRepository.save(existingTechnician);
     }
 

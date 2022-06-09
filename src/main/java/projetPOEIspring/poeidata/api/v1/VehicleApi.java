@@ -39,7 +39,7 @@ public class VehicleApi {
     public ResponseEntity<List<VehicleDto>> getAll() {
         return ResponseEntity.ok(
                 this.vehicleService.getAll().stream()
-                        .map(vehicle -> this.vehicleMapper.MapToDto(vehicle))
+                        .map(vehicle -> this.vehicleMapper.mapToDto(vehicle))
                         .collect(Collectors.toList())
         );
     }
@@ -48,7 +48,7 @@ public class VehicleApi {
     @Operation(summary = "Return a vehicle", responses = @ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation = VehicleDto.class)))))
     public ResponseEntity<VehicleDto> getById(@PathVariable final Integer id) {
         try {
-            return ResponseEntity.ok(vehicleMapper.MapToDto(vehicleService.getById(id)));
+            return ResponseEntity.ok(vehicleMapper.mapToDto(vehicleService.getById(id)));
         } catch (UnknownResourceException ure) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ure.getMessage());
         }
@@ -63,9 +63,9 @@ public class VehicleApi {
     public ResponseEntity<VehicleDto> createVehicle(@RequestBody final VehicleDto vehicleDto) {
 
         VehicleDto vehicleDtoResponse =
-                this.vehicleMapper.MapToDto(
+                this.vehicleMapper.mapToDto(
                         this.vehicleService.createVehicle(
-                                this.vehicleMapper.MapToModel(vehicleDto)
+                                this.vehicleMapper.mapToModel(vehicleDto)
                         ));
 
         return ResponseEntity
@@ -97,7 +97,7 @@ public class VehicleApi {
     public ResponseEntity<Void> updateVehicle(@PathVariable final Integer id, @RequestBody VehicleDto vehicleDto) {
         try {
             vehicleDto.setId(id);
-            this.vehicleService.updateVehicle(vehicleMapper.MapToModel(vehicleDto));
+            this.vehicleService.updateVehicle(vehicleMapper.mapToModel(vehicleDto));
             return ResponseEntity.noContent().build();
         } catch (UnknownResourceException ure) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ure.getMessage());

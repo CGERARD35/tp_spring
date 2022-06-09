@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import projetPOEIspring.poeidata.models.Technician;
 
 import javax.persistence.Column;
 
@@ -21,5 +22,6 @@ public class AdressDto {
 
     private String number;
 
+    private Integer technicianId;
 
 }

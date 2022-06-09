@@ -1,5 +1,6 @@
 package projetPOEIspring.poeidata.mappers;
 
+
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.springframework.stereotype.Component;
@@ -10,7 +11,7 @@ import projetPOEIspring.poeidata.models.Vehicle;
 @Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface VehicleMapper {
 
-    VehicleDto MapToDto(Vehicle vehicle);
+    VehicleDto mapToDto (Vehicle vehicle);
 
-    Vehicle MapToModel(VehicleDto vehicleDto);
+    Vehicle mapToModel (VehicleDto vehicleDto);
 }

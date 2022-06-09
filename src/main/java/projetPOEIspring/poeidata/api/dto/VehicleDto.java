@@ -15,5 +15,6 @@ public class VehicleDto {
     private String plateNumber;
     private String brand;
     private String yearOfConstruction;
+    private Integer technicianId;
 
 }

@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import projetPOEIspring.poeidata.models.Technician;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,5 +23,7 @@ public class ManagerDto {
     private String phone;
 
     private String mobilePhone;
+
+    private List<TechnicianDto> technicians;
 
 }

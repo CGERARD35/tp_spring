@@ -27,7 +27,7 @@ public class Manager {
     private String lastname;
 
     @Column(nullable = false)
-    private String Phone;
+    private String phone;
 
     @Column(name = "mobile_phone",
             nullable = false)

@@ -17,10 +17,10 @@ import java.util.List;
 @Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface ManagerMapper {
 
-//    @Mapping(target = "technicians", expression = "java(getTechnician(manager))")
+    @Mapping(target = "technicians", expression = "java(getTechnicians(manager))")
     ManagerDto mapManagerToManagerDto(Manager manager);
 
-    default List<TechnicianDto> getTechnicians(Manager manager, Adress adress, Vehicle vehicle) {
+    default List<TechnicianDto> getTechnicians(Manager manager) {
         List<TechnicianDto> technicians = new ArrayList<>();
         if (manager.getTechnicians() != null) {
             technicians = manager.getTechnicians().stream()
@@ -29,9 +29,9 @@ public interface ManagerMapper {
                             technician.getLastname(),
                             technician.getFirstname(),
                             technician.getAge(),
+                            null,
                             manager.getId(),
-                            adress.getId(),
-                            vehicle.getId()
+                            null
                     ))
                     .toList();
         }
@@ -39,6 +39,5 @@ public interface ManagerMapper {
     }
 
     Manager mapManagerDtoToManager (ManagerDto managerDto);
-
 
 }
