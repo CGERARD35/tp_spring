@@ -42,7 +42,7 @@ public class WorksiteApi {
     }
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    @Operation(summary = "Get an adress by it's ID")
+    @Operation(summary = "Get an worksite by it's ID")
     public ResponseEntity<WorksiteDto> getById(@PathVariable final Integer id){
         try{
             return ResponseEntity.ok(this.worksiteMapper.mapToDto(worksiteService.getBydId(id)));
@@ -52,7 +52,7 @@ public class WorksiteApi {
     }
 
     @DeleteMapping(path = "/{id}")
-    @Operation(summary = "Delete an adress by it's ID")
+    @Operation(summary = "Delete an worksite by it's ID")
     public ResponseEntity<Void> delete(@PathVariable Integer id){
         try{
             this.worksiteService.delete(id);
@@ -63,7 +63,7 @@ public class WorksiteApi {
     }
 
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE},consumes = {MediaType.APPLICATION_JSON_VALUE})
-    @Operation(summary = "Create an adress")
+    @Operation(summary = "Create a worksite")
     public ResponseEntity<WorksiteDto> create(@RequestBody final WorksiteDto WorksiteDto){
         try{
             WorksiteDto adressCreated = this.worksiteMapper.mapToDto(
@@ -79,7 +79,7 @@ public class WorksiteApi {
 
     @PutMapping(path = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE},
     produces = {MediaType.APPLICATION_JSON_VALUE})
-    @Operation(summary = "Update an adress")
+    @Operation(summary = "Update an worksite")
     public ResponseEntity<WorksiteDto> update(
             @PathVariable final Integer id,
             @RequestBody WorksiteDto WorksiteDto)
