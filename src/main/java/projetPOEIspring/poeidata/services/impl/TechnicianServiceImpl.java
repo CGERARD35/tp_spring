@@ -23,12 +23,16 @@ public class TechnicianServiceImpl implements TechnicianService {
     @Autowired
     private TechnicianRepository technicianRepository;
 
+    @Autowired
     private ManagerService managerService;
 
+    @Autowired
     private WorksiteService worksiteService;
 
+    @Autowired
     private VehicleService vehicleService;
 
+    @Autowired
     private AdressService adressService;
 
     @Override

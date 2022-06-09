@@ -17,12 +17,10 @@ public class WorksiteServiceImpl implements WorksiteService {
 
     private final WorksiteRepository worksiteRepository;
     private final TechnicianRepository technicianRepository;
-    private final TechnicianService technicianService;
 
-    public WorksiteServiceImpl(WorksiteRepository worksiteRepository, TechnicianRepository technicianRepository, TechnicianService technicianService) {
+    public WorksiteServiceImpl(WorksiteRepository worksiteRepository, TechnicianRepository technicianRepository) {
         this.worksiteRepository = worksiteRepository;
         this.technicianRepository = technicianRepository;
-        this.technicianService = technicianService;
     }
 
     @Override
