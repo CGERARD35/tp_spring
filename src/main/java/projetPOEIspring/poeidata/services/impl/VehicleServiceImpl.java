@@ -1,43 +1,53 @@
 package projetPOEIspring.poeidata.services.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import projetPOEIspring.poeidata.exceptions.UnknownResourceException;
 import projetPOEIspring.poeidata.repositories.VehicleRepository;
 import projetPOEIspring.poeidata.models.Vehicle;
 import projetPOEIspring.poeidata.services.VehicleService;
 
 import java.util.List;
 
+@Service
 public class VehicleServiceImpl implements VehicleService {
-
-    Logger log = LoggerFactory.getLogger(VehicleServiceImpl.class);
 
     @Autowired
     private VehicleRepository vehicleRepository;
 
     @Override
     public List<Vehicle> getAll() {
-        return null;
+        return this.vehicleRepository.findAll(Sort.by("id").ascending());
     }
 
     @Override
     public Vehicle getById(Integer id) {
-        return null;
+
+        return vehicleRepository.findById(id)
+                .orElseThrow(() -> new UnknownResourceException("No Vehicle found for the given ID"));
     }
 
     @Override
     public Vehicle createVehicle(Vehicle vehicle) {
-        return null;
+
+        return this.vehicleRepository.save(vehicle);
     }
 
     @Override
     public void deleteVehicle(Integer id) {
+        Vehicle vehicleToDelete = this.getById(id);
 
+        this.vehicleRepository.delete(vehicleToDelete);
     }
 
     @Override
     public Vehicle updateVehicle(Vehicle vehicle) {
-        return null;
+        Vehicle vehicleToUpdate = this.getById(vehicle.getId());
+        vehicleToUpdate.setBrand(vehicle.getBrand());
+        vehicleToUpdate.setPlateNumber(vehicle.getPlateNumber());
+        vehicleToUpdate.setYearOfConstruction(vehicle.getYearOfConstruction());
+        return this.vehicleRepository.save(vehicleToUpdate);
     }
 }

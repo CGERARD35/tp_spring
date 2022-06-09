@@ -1,10 +1,8 @@
 package projetPOEIspring.poeidata.services;
 
 import projetPOEIspring.poeidata.models.Vehicle;
-import projetPOEIspring.poeidata.services.impl.VehicleServiceImpl;
 
 import java.util.List;
-
 public interface VehicleService {
 
     List<Vehicle> getAll();
