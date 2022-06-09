@@ -42,7 +42,7 @@ public class AdressServiceImpl implements AdressService {
         adressToUpdate.setCity(adress.getCity());
         adressToUpdate.setStreet(adress.getStreet());
         adressToUpdate.setNumber(adress.getNumber());
-        return adressToUpdate;
+        return this.adressRepository.save(adressToUpdate);
     }
 
     @Override
