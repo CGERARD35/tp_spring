@@ -2,9 +2,7 @@ package projetPOEIspring.poeidata.services.impl;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import projetPOEIspring.poeidata.api.dto.TechnicianDto;
 import projetPOEIspring.poeidata.exceptions.UnknownResourceException;
-import projetPOEIspring.poeidata.models.Technician;
 import projetPOEIspring.poeidata.models.Worksite;
 import projetPOEIspring.poeidata.repositories.TechnicianRepository;
 import projetPOEIspring.poeidata.repositories.WorksiteRepository;
