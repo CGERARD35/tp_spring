@@ -9,6 +9,7 @@ import projetPOEIspring.poeidata.api.dto.TechnicianDto;
 import projetPOEIspring.poeidata.models.Adress;
 import projetPOEIspring.poeidata.models.Manager;
 import projetPOEIspring.poeidata.models.Vehicle;
+import projetPOEIspring.poeidata.models.Worksite;
 
 import java.util.ArrayList;
 import java.util.List;
