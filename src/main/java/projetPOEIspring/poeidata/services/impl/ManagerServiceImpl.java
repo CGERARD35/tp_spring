@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import projetPOEIspring.poeidata.exceptions.NameException;
 import projetPOEIspring.poeidata.exceptions.NotAllowedToDeleteManagerException;
+import projetPOEIspring.poeidata.exceptions.PhoneException;
 import projetPOEIspring.poeidata.exceptions.UnknownResourceException;
 import projetPOEIspring.poeidata.models.Manager;
-import projetPOEIspring.poeidata.models.Technician;
 import projetPOEIspring.poeidata.repositories.ManagerRepository;
 import projetPOEIspring.poeidata.services.ManagerService;
-import projetPOEIspring.poeidata.services.TechnicianService;
 
 import java.util.List;
 
@@ -25,7 +25,6 @@ public class ManagerServiceImpl implements ManagerService {
     @Autowired
     private ManagerRepository managerRepository;
 
-    private TechnicianService technicianService;
 
     @Override
     public List<Manager> getAll() {
@@ -40,8 +39,15 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public Manager createManager(Manager manager) {
+        manager.setId(null);
         log.debug("Attempting to save in DB...");
-        return this.managerRepository.save(manager);
+        if(manager.getPhone().length() > 15 || manager.getPhone().length() < 2){
+            throw new PhoneException("Le numéro doit etre contenue 2 et 15 charactères ");
+        } else if(manager.getFirstname().length() > 20 || manager.getFirstname().length() < 2){
+            throw new NameException("Le prénom doit etre contenue 2 et 20 charactères ");
+        } else {
+            return this.managerRepository.save(manager);
+        }
     }
 
     @Override
@@ -65,6 +71,7 @@ public class ManagerServiceImpl implements ManagerService {
         existingManager.setFirstname(manager.getFirstname());
         existingManager.setPhone(manager.getPhone());
         existingManager.setMobilePhone(manager.getMobilePhone());
+
         return this.managerRepository.save(existingManager);
     }
 }

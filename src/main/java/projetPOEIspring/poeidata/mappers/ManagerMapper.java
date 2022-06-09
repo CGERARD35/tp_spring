@@ -20,7 +20,7 @@ import static java.util.stream.Collectors.toList;
 @Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface ManagerMapper {
 
-//    @Mapping(target = "technicians", expression = "java(getTechnician(manager))")
+    @Mapping(target = "technicians", expression = "java(getTechnicians(manager))")
     ManagerDto mapManagerToManagerDto(Manager manager);
 
     default List<TechnicianDto> getTechnicians(Manager manager) {
