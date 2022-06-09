@@ -13,7 +13,9 @@ import projetPOEIspring.poeidata.models.*;
 import projetPOEIspring.poeidata.repositories.TechnicianRepository;
 import projetPOEIspring.poeidata.services.*;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Qualifier("technicianService")
@@ -76,8 +78,6 @@ public class TechnicianServiceImpl implements TechnicianService {
         existingTechnician.setAge(technician.getAge());
         Manager manager = this.managerService.getById(technician.getManager().getId());
         existingTechnician.setManager(manager);
-//        Worksite worksite = this.worksiteService.getBydId(technician.getWorksites().getId());
-//        existingTechnician.setWorksites(worksite);
         Vehicle vehicle = this.vehicleService.getById(technician.getVehicle().getId());
         existingTechnician.setVehicle(vehicle);
         Adress adress = this.adressService.getById(technician.getAdress().getId());
