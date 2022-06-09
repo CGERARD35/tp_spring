@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import projetPOEIspring.poeidata.exceptions.NameException;
 import projetPOEIspring.poeidata.exceptions.UnknownResourceException;
 import projetPOEIspring.poeidata.models.User;
 import projetPOEIspring.poeidata.repositories.UserRepository;
@@ -45,9 +46,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createUser(User user) {
         log.debug("Attempting to save in DB...");
+
         String passwordEncoded = new BCryptPasswordEncoder().encode(user.getPassword());
         user.setPassword(passwordEncoded);
-        return this.userRepository.save(user);
+        if (user.getUsername().length() > 30) {
+            throw new NameException("Username cannot have more than 30 characters.");
+        } else {
+            return this.userRepository.save(user);
+        }
     }
 
     @Override
@@ -72,6 +78,10 @@ public class UserServiceImpl implements UserService {
         existingUser.setGrants(user.getGrants());
         String passwordEncoded = new BCryptPasswordEncoder().encode(user.getPassword());
         existingUser.setPassword(passwordEncoded);
-        return this.userRepository.save(existingUser);
+        if (user.getUsername().length() > 30) {
+            throw new NameException("Username cannot have more than 30 characters.");
+        } else {
+            return this.userRepository.save(existingUser);
+        }
     }
 }

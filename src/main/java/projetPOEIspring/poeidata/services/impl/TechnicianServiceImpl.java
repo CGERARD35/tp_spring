@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import projetPOEIspring.poeidata.exceptions.NameException;
 import projetPOEIspring.poeidata.exceptions.UnknownResourceException;
 import projetPOEIspring.poeidata.models.*;
 import projetPOEIspring.poeidata.repositories.TechnicianRepository;
@@ -49,7 +50,13 @@ public class TechnicianServiceImpl implements TechnicianService {
     @Override
     public Technician createTechnician(Technician technician) {
         log.debug("Attempting to save in DB.");
-        return this.technicianRepository.save(technician);
+        if (
+                technician.getFirstname().length() > 255 || technician.getLastname().length() > 255
+        ) {
+            throw new NameException("Names cannot exceed 255 characters.");
+        } else {
+            return this.technicianRepository.save(technician);
+        }
     }
 
     @Override
