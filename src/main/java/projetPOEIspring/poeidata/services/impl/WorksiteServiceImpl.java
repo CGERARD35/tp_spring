@@ -39,6 +39,7 @@ public class WorksiteServiceImpl implements WorksiteService {
     @Override
     public Worksite create(Worksite worksite) {
         worksite.setId(null);
+        worksite.setAdress(null);
         final Worksite createdWorkSite = this.worksiteRepository.save(worksite);
         new ArrayList<>(createdWorkSite.getTechnicians()).forEach(
                 technician -> this.technicianRepository.findById(technician.getId()).ifPresent(
