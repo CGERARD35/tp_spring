@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -37,10 +38,10 @@ public class Technician {
     @JoinColumn(name = "adress_id")
     private Adress adress;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(joinColumns={@JoinColumn(name="technician_id")},
             inverseJoinColumns = {@JoinColumn(name="worksite_id")})
-    private Set<Worksite> worksites;
+    private Set<Worksite> worksites = new HashSet<>();
 
     @OneToOne
     @JoinColumn(name = "vehicle_id")
