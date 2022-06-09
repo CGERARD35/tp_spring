@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import projetPOEIspring.poeidata.api.dto.TechnicianDto;
+import projetPOEIspring.poeidata.exceptions.NameException;
 import projetPOEIspring.poeidata.exceptions.NotAllowedToDeleteManagerException;
 import projetPOEIspring.poeidata.exceptions.UnknownResourceException;
 import projetPOEIspring.poeidata.mappers.TechnicianMapper;
@@ -63,14 +64,18 @@ public class TechnicianApi {
     @ApiResponse(responseCode = "201", description = "Created")
     public ResponseEntity<TechnicianDto> createTechnician(@RequestBody final TechnicianDto technicianDto) {
         log.debug("Attempting to create technician");
+        try {
+            TechnicianDto technicianDtoResponse =
+                    this.technicianMapper.mapTechnicianToTechnicianDto(
+                            this.technicianService.createTechnician(
+                                    this.technicianMapper.mapTechnicianDtoToTechnician(technicianDto)));
+            return ResponseEntity
+                    .created(URI.create("/v1/technicians/" + technicianDtoResponse.getId()))
+                    .body(technicianDtoResponse);
+        } catch (NameException namee){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, namee.getMessage());
+        }
 
-        TechnicianDto technicianDtoResponse =
-                this.technicianMapper.mapTechnicianToTechnicianDto(
-                        this.technicianService.createTechnician(
-                                this.technicianMapper.mapTechnicianDtoToTechnician(technicianDto)));
-        return ResponseEntity
-                .created(URI.create("/v1/technicians/" + technicianDtoResponse.getId()))
-                .body(technicianDtoResponse);
     }
 
     @DeleteMapping(path = "/{id}")

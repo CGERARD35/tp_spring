@@ -3,7 +3,7 @@ package projetPOEIspring.poeidata.exceptions;
 public class UnknownResourceException extends RuntimeException{
 
     public UnknownResourceException() {
-        super("Unkwon ressouce");
+        super("Unknown resource");
     }
 
     public UnknownResourceException(String message) {

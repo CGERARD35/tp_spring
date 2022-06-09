@@ -11,7 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import projetPOEIspring.poeidata.api.dto.ManagerDto;
+import projetPOEIspring.poeidata.exceptions.NameException;
 import projetPOEIspring.poeidata.exceptions.NotAllowedToDeleteManagerException;
+import projetPOEIspring.poeidata.exceptions.PhoneException;
 import projetPOEIspring.poeidata.exceptions.UnknownResourceException;
 import projetPOEIspring.poeidata.mappers.ManagerMapper;
 import projetPOEIspring.poeidata.models.Manager;
@@ -60,15 +62,24 @@ public class ManagerApi {
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
     @Operation(summary = "create a manager")
-    @ApiResponse(responseCode = "201", description = "Created")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Created"),
+            @ApiResponse(responseCode = "403", description = "Cannot create the manager"),
+    })
     public ResponseEntity<ManagerDto> createManager(@RequestBody final ManagerDto managerDto) {
         log.debug("Attempting to create manager with lastname {}", managerDto.getLastname());
-        ManagerDto managerDtoResponse = this.managerMapper.mapManagerToManagerDto(
-                this.managerService.createManager(
-                        this.managerMapper.mapManagerDtoToManager(managerDto)));
-        return ResponseEntity
-                .created(URI.create("/v1/managers" + managerDtoResponse.getId()))
-                .body(managerDtoResponse);
+        try{
+            ManagerDto managerDtoResponse = this.managerMapper.mapManagerToManagerDto(
+                    this.managerService.createManager(
+                            this.managerMapper.mapManagerDtoToManager(managerDto)));
+            return ResponseEntity
+                    .created(URI.create("/v1/managers" + managerDtoResponse.getId()))
+                    .body(managerDtoResponse);
+        } catch (PhoneException phe){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, phe.getMessage());
+        } catch (NameException namee){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, namee.getMessage());
+        }
     }
 
     @DeleteMapping(path = "/{id}")
