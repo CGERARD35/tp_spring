@@ -32,5 +32,4 @@ public class Worksite {
     @ManyToMany(mappedBy = "worksites")
     List<Technician> technicians;
 
-
 }

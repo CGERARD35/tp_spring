@@ -46,4 +46,5 @@ public class Technician {
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
 
+
 }
