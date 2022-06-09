@@ -16,13 +16,14 @@ import java.util.List;
 @NoArgsConstructor
 public class Worksite {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "NUMERIC",nullable = false)
     private Double price;
 
     @OneToOne

@@ -6,6 +6,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.springframework.stereotype.Component;
 import projetPOEIspring.poeidata.api.dto.TechnicianDto;
+import projetPOEIspring.poeidata.api.dto.TechnicianDtoForWorksite;
 import projetPOEIspring.poeidata.models.Technician;
 
 @Component
@@ -21,5 +22,9 @@ public interface TechnicianMapper {
     @Mapping(source = "managerId", target = "manager.id")
     @Mapping(source = "vehicleId", target = "vehicle.id")
     Technician mapTechnicianDtoToTechnician(TechnicianDto technicianDto);
+
+    TechnicianDtoForWorksite mapToDto(Technician technician);
+
+    Technician mapToModel(TechnicianDtoForWorksite technicianDtoForWorksite);
 
 }

@@ -1,4 +1,57 @@
 package projetPOEIspring.poeidata.services.impl;
 
-public class WorksiteServiceImpl {
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import projetPOEIspring.poeidata.exceptions.UnknownResourceException;
+import projetPOEIspring.poeidata.models.Worksite;
+import projetPOEIspring.poeidata.repositories.WorksiteRepository;
+import projetPOEIspring.poeidata.services.TechnicianService;
+import projetPOEIspring.poeidata.services.WorksiteService;
+
+import java.util.List;
+
+@Service
+public class WorksiteServiceImpl implements WorksiteService {
+
+    private final WorksiteRepository worksiteRepository;
+    private final TechnicianService technicianService;
+
+    public WorksiteServiceImpl(WorksiteRepository worksiteRepository, TechnicianService technicianService) {
+        this.worksiteRepository = worksiteRepository;
+        this.technicianService = technicianService;
+    }
+
+    @Override
+    public List<Worksite> getAll() {
+        return this.worksiteRepository.findAll(Sort.by("name").ascending());
+    }
+
+    @Override
+    public Worksite getBydId(Integer id) {
+        return this.worksiteRepository.findById(id)
+                .orElseThrow(() -> new UnknownResourceException("Unknwon Worksite"));
+    }
+
+    @Override
+    public Worksite create(Worksite worksite) {
+        worksite.setId(null);
+        //TODO ajouter liste de customer
+        return this.worksiteRepository.save(worksite);
+    }
+
+    @Override
+    public Worksite update(Worksite worksite) {
+        Worksite worksiteToUpdate = this.getBydId(worksite.getId());
+        worksiteToUpdate.setName(worksite.getName());
+        worksiteToUpdate.setAdress(worksite.getAdress());
+        worksiteToUpdate.setPrice(worksite.getPrice());
+        worksiteToUpdate.setTechnicians(worksite.getTechnicians());
+        return this.worksiteRepository.save(worksiteToUpdate);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        Worksite worksiteToDelete = this.getBydId(id);
+        this.worksiteRepository.delete(worksiteToDelete);
+    }
 }
