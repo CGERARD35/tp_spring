@@ -32,7 +32,7 @@ public class AdressServiceImpl implements AdressService {
 
     @Override
     public Adress create(Adress adress) {
-        if (adress.getCity().length() <= 5) {
+        if (adress.getCity().length() <= 100) {
             adress.setId(null);
             return this.adressRepository.save(adress);
         } else {
